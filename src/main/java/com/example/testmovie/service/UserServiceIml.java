@@ -1,0 +1,227 @@
+package com.example.testmovie.service;
+
+import com.example.testmovie.DAO.User;
+import com.example.testmovie.mappers.UserMapper;
+import com.example.testmovie.message.Result;
+import com.example.testmovie.utils.Table;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+
+@Service
+@Transactional(readOnly = true)
+public class UserServiceIml implements UserService{
+//    ArrayList<User> getAll(Table table);
+//
+//    ArrayList<User> getObjByNotDefineName(Table table);
+//
+//    User getObjById(Table table);
+//
+//    ArrayList<User> getObjByName(Table table);
+//
+//    int addObj(Table table);
+//
+//    int deleteObjById(Table table);
+//
+//    int deleteObjByName(Table table);
+//
+//    int updateObj(Table table);
+//    @Autowired
+//    private UserMapper userMapper;
+//
+//    @Autowired
+//    private ObjMapper<User> userObjMapper;
+//
+//    private static Result SUCCESS = new Result(Result.SUCCESS_CODE);
+//
+//    private static Result FAIL = new Result(Result.FAIL_CODE);
+//
+//    public UserService() {
+//
+//    }
+//
+//    public User getUserById(Long id){
+//        return userMapper.getUserById(id);
+//    }
+//
+//    public User getUser(User user){
+//        return userMapper.getUser(user);
+//    }
+//
+//    public ArrayList<User> getAll(){
+//        Table table = new Table("USER");
+////        table.setLike_k(new String[]{"name"});
+////        table.setLike_v(new String[]{"何"});
+////        ArrayList<User> result = objMapper.getAll(table);
+////        return userMapper.serchAll(table);
+//        return userObjMapper.getObjWithParams(table);
+//    }
+//
+//    @Transactional(readOnly = false)
+//    public int addUser(User user){
+//        return userMapper.addUser(user);
+//    }
+//
+//    @Transactional(readOnly = false)
+//    public int addUsers(ArrayList<User> users){
+//        int count = 0;
+//        for(User user : users){
+//            count += (addUser(user));
+//        }
+//        return count;
+//    }
+//
+//    public Result login(User user){
+//        //查找数据库中是否有user并返回userTmp
+//        User userTmp = userMapper.getUserByNameAndPaswd(user);
+//        if(null != userTmp){
+//            return SUCCESS;
+//        }else{
+//            return FAIL;
+//        }
+//    }
+//
+//    @Transactional(readOnly = false)
+//    public Result register(User user){
+//        User userSearch = userMapper.getUser(user);
+//        if(null != userSearch){
+//            //如果用户名存在
+//            return FAIL;
+//        }else{
+//            //插入用户
+//            int r = userMapper.addUser(user);
+//            if(1 != r){
+//                //插入失败
+//                return FAIL;
+//            }else {
+//                return SUCCESS;
+//            }
+//        }
+//    }
+//
+//    @Transactional(readOnly = false)
+//    public Result deleteUser(User user){
+//        if(0 != userMapper.deleteUser(user)){
+//            return SUCCESS;
+//        }else {
+//            return FAIL;
+//        }
+//    }
+
+    @Autowired
+    private UserMapper userMapper;
+
+    private static Result SUCCESS = new Result(Result.SUCCESS_CODE);
+
+    private static Result FAIL = new Result(Result.FAIL_CODE);
+
+    public UserServiceIml() {
+
+    }
+
+    /**
+     *
+     * @param tableName 表名字
+     * @return 一张新表
+     */
+    private Table getTable(String tableName){
+        Table table = new Table(tableName);
+        return table;
+    }
+
+    @Override
+    public User getUserById(Long id){
+//        return userMapper.getUserById(id);
+        Table table = getTable("user");
+        table.setSearch_k(new String[]{User.ID});
+        table.setSearch_v(new String[]{id.toString()});
+        return userMapper.getObjWithParams(table).get(0);
+    }
+
+    @Override
+    public User getUser(User user){
+        Table table = getTable("user");
+        table.setSearch_k(new String[]{User.ID, User.NAME, User.PASWD});
+        table.setSearch_v(new String[]{user.getId().toString(), user.getName(), user.getPaswd()});
+        return userMapper.getObjWithParams(table).get(0);
+    }
+
+    @Override
+    public ArrayList<User> getAll(){
+        Table table = new Table("USER");
+        return userMapper.getObjWithParams(table);
+    }
+
+    @Override
+    @Transactional(readOnly = false)
+    public int addUser(User user){
+        Table table = getTable("user");
+        table.setK(new String[]{User.NAME, User.PASWD});
+        table.setV(new String[]{user.getName(), user.getPaswd()});
+        return userMapper.addObjWithParams(table);
+    }
+
+    @Override
+    @Transactional(readOnly = false)
+    public int addUsers(ArrayList<User> users){
+        int count = 0;
+        for(User user : users){
+            count += (addUser(user));
+        }
+        return count;
+    }
+
+    @Override
+    public Result login(User user){
+        //查找数据库中是否有user并返回userTmp
+        Table table = getTable("user");
+        table.setSearch_k(new String[]{User.NAME, User.PASWD});
+        table.setSearch_v(new String[]{user.getName(), user.getPaswd()});
+        ArrayList<User> userTmp = userMapper.getObjWithParams(table);
+        if(null != userTmp){
+            return SUCCESS;
+        }else{
+            return FAIL;
+        }
+    }
+
+    @Override
+    @Transactional(readOnly = false)
+    public Result register(User user){
+        Table table = getTable("user");
+        table.setK(new String[]{User.NAME, User.PASWD});
+        table.setV(new String[]{user.getName(), user.getPaswd()});
+        table.setSearch_k(new String[]{User.NAME, User.PASWD});
+        table.setSearch_v(new String[]{user.getName(), user.getPaswd()});
+//        User userSearch = userMapper.getUser(user);
+        ArrayList<User> userSearch = userMapper.getObjWithParams(table);
+        if(null != userSearch && userSearch.size() != 0){
+            //如果用户名存在
+            return FAIL;
+        }else{
+            //插入用户
+            int r = userMapper.addObjWithParams(table);
+            if(1 != r){
+                //插入失败
+                return FAIL;
+            }else {
+                return SUCCESS;
+            }
+        }
+    }
+
+    @Override
+    @Transactional(readOnly = false)
+    public Result deleteUser(User user){
+        Table table = new Table("user");
+        table.setK(new String[]{User.ID});
+        table.setV(new String[]{user.getId().toString()});
+        if(0 != userMapper.deleteObjWithParams(table)){
+            return SUCCESS;
+        }else {
+            return FAIL;
+        }
+    }
+}

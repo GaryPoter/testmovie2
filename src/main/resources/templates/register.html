@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta content="text/html;charset=UTF-8"/>
+    <link th:src="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:src="@{/bootstrap/css/bootstrap-theme.min.css}" rel="stylesheet"/>
+    <title>注册</title>
+</head>
+<body>
+<script th:src="@{/js/jquery-3.3.1.min.js}"></script>
+<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+
+<form>
+    <table>
+        <tr>
+            <!--下面是用户名输入框-->
+            <div class="input-group">
+                <td><span class="input-group-addon" id="basic-addon1">@</span></td>
+                <td><input id="username" type="text" class="form-control" placeholder="用户名" aria-describedby="basic-addon1"/></td>
+            </div>
+        </tr>
+        <tr>
+            <div class="input-group">
+                <td><span class="input-group-addon" id="basic-addon1">@</span></td>
+                <td><input id="password" type="password" class="form-control" placeholder="输入密码" aria-describedby="basic-addon1" /></td>
+            </div>
+        </tr>
+        <tr>
+            <div class="input-group">
+                <td><span class="input-group-addon" id="basic-addon1">@</span></td>
+                <td><input id="repassword" type="password" class="form-control" placeholder="确认密码" aria-describedby="basic-addon1"/></td>
+            </div>
+        </tr>
+        <tr>
+            <td>
+                <button type="button" id="register">注册</button>
+            </td>
+            <td>
+                <button type="reset">重置</button>
+            </td>
+        </tr>
+    </table>
+    <a href="/movie/home" hidden="hidden"><span id="moviePage">下一步</span></a>
+</form>
+
+<script th:src="@{/js/register.js}" type="text/javascript"></script>
+</body>
+</html>
