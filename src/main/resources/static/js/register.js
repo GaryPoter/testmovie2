@@ -26,6 +26,7 @@ $('#register').on('click', function () {
                 window.location.href="/movie/home";
             }else {
                 $('#username').select().focus();
+                alert("注册失败！")
             }
         }
     	});
