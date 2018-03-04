@@ -1,12 +1,15 @@
 $('#register').on('click', function () {
+	var name = $('input#username').val();
+	var email = $('input#email').val();
     var password = $('input#password').val();
-    var name = $('input#username').val();
     var repassword = $('input#repassword').val();
-    if(!(password == repassword)){
-        $('input#repassword').select().focus();
-        return;
-    }
-    $.ajax({
+	if(valid_email(email) && valid_password(password)){
+		if(!(password == repassword)){
+			alert("密码不一致");
+			$('input#repassword').select().focus();
+			return;
+		}
+		$.ajax({
         async: false,
         type: 'POST',
         dataType: 'json',
@@ -25,5 +28,9 @@ $('#register').on('click', function () {
                 $('#username').select().focus();
             }
         }
-    });
+    	});
+	}else{
+		alert("密码或者邮箱格式错误！");
+		$('input#email').select().focus();
+	}
 });

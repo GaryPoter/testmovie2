@@ -10,6 +10,8 @@ public class User {
 
     public static final String PASWD = "paswd";
 
+    public static final String TABLENAME = "user";
+
     @NotNull
     private Long id;
 

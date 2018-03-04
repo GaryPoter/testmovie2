@@ -36,4 +36,6 @@ public interface UserMapper extends ObjMapper<User>{
 //    int updateUser(User user);
 //    @UpdateProvider(type = DynaSqlProvider.class, method = "updateWithParam")
 //    int updateUser(Table table);
+    @Select("select user.name , movie.name, comment.content from user, movie, comment where user.id = comment.user_id and movie.id = comment.movie_id")
+    Object getAllComment();
 }

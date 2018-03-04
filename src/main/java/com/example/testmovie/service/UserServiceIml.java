@@ -134,7 +134,7 @@ public class UserServiceIml implements UserService{
     @Override
     public User getUserById(Long id){
 //        return userMapper.getUserById(id);
-        Table table = getTable("user");
+        Table table = getTable(User.TABLENAME);
         table.setSearch_k(new String[]{User.ID});
         table.setSearch_v(new String[]{id.toString()});
         return userMapper.getObjWithParams(table).get(0);
@@ -142,7 +142,7 @@ public class UserServiceIml implements UserService{
 
     @Override
     public User getUser(User user){
-        Table table = getTable("user");
+        Table table = getTable(User.TABLENAME);
         table.setSearch_k(new String[]{User.ID, User.NAME, User.PASWD});
         table.setSearch_v(new String[]{user.getId().toString(), user.getName(), user.getPaswd()});
         return userMapper.getObjWithParams(table).get(0);
@@ -150,14 +150,14 @@ public class UserServiceIml implements UserService{
 
     @Override
     public ArrayList<User> getAll(){
-        Table table = new Table("USER");
+        Table table = new Table(User.TABLENAME);
         return userMapper.getObjWithParams(table);
     }
 
     @Override
     @Transactional(readOnly = false)
     public int addUser(User user){
-        Table table = getTable("user");
+        Table table = getTable(User.TABLENAME);
         table.setK(new String[]{User.NAME, User.PASWD});
         table.setV(new String[]{user.getName(), user.getPaswd()});
         return userMapper.addObjWithParams(table);
@@ -176,11 +176,12 @@ public class UserServiceIml implements UserService{
     @Override
     public Result login(User user){
         //查找数据库中是否有user并返回userTmp
-        Table table = getTable("user");
+        //select * from user where name = user.getName() and paswd = user.getPaswd()
+        Table table = getTable(User.TABLENAME);
         table.setSearch_k(new String[]{User.NAME, User.PASWD});
         table.setSearch_v(new String[]{user.getName(), user.getPaswd()});
         ArrayList<User> userTmp = userMapper.getObjWithParams(table);
-        if(null != userTmp){
+        if(null != userTmp && userTmp.size() != 0){
             return SUCCESS;
         }else{
             return FAIL;
@@ -190,7 +191,7 @@ public class UserServiceIml implements UserService{
     @Override
     @Transactional(readOnly = false)
     public Result register(User user){
-        Table table = getTable("user");
+        Table table = getTable(User.TABLENAME);
         table.setK(new String[]{User.NAME, User.PASWD});
         table.setV(new String[]{user.getName(), user.getPaswd()});
         table.setSearch_k(new String[]{User.NAME, User.PASWD});
@@ -215,7 +216,7 @@ public class UserServiceIml implements UserService{
     @Override
     @Transactional(readOnly = false)
     public Result deleteUser(User user){
-        Table table = new Table("user");
+        Table table = new Table(User.TABLENAME);
         table.setK(new String[]{User.ID});
         table.setV(new String[]{user.getId().toString()});
         if(0 != userMapper.deleteObjWithParams(table)){
