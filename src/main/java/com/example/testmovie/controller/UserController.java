@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-//@Controller
 @RestController
 @RequestMapping("/movie/user")
 public class UserController {
@@ -59,12 +58,12 @@ public class UserController {
     }
 
     @RequestMapping(value = "/loginAction", method = {RequestMethod.POST})
-    public Result login(String name, String paswd){
-        return userService.login(new User(name, paswd));
+    public Result login(String email, String password){
+        return userService.login(new User(new Long(-1),null, email, password));
     }
 
     @RequestMapping(value = "/registerAction", method = RequestMethod.POST)
-    public Result register(String name, String paswd){
-        return userService.register(new User(name, paswd));
+    public Result register(String name, String email, String password){
+        return userService.register(new User(new Long(-1), name, email, password));
     }
 }

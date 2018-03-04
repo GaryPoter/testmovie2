@@ -4,13 +4,16 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 public class User {
+    public static final String TABLENAME = "user";
+
     public static final String ID = "id";
 
-    public static final String NAME = "name";
+    public static final String NAME = "username";
 
-    public static final String PASWD = "paswd";
+    public static final String EMAIL = "email";
 
-    public static final String TABLENAME = "user";
+    public static final String PASSWORD = "password";
+
 
     @NotNull
     private Long id;
@@ -21,18 +24,32 @@ public class User {
 
     @NotNull
 //    @Size(min = 8, max = 20)
-    private String paswd;
+    private String password;
 
-    public User(Long id, String name, String paswd) {
-        this.id = id;
-        this.name = name;
-        this.paswd = paswd;
+    @NotNull
+    private String email;
+
+    public String getPassword() {
+        return password;
     }
 
-    public User(String name, String paswd) {
-        this.id = new Long(-1);
+    public void setPassword(String password) {
+        password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public User(Long id, String name, String email, String password) {
+        this.id = id;
         this.name = name;
-        this.paswd = paswd;
+        this.password = password;
+        this.email = email;
     }
 
     //jackson对象的转换需要默认构造函数
@@ -55,11 +72,4 @@ public class User {
         this.name = name;
     }
 
-    public String getPaswd() {
-        return paswd;
-    }
-
-    public void setPaswd(String paswd) {
-        this.paswd = paswd;
-    }
 }

@@ -143,8 +143,8 @@ public class UserServiceIml implements UserService{
     @Override
     public User getUser(User user){
         Table table = getTable(User.TABLENAME);
-        table.setSearch_k(new String[]{User.ID, User.NAME, User.PASWD});
-        table.setSearch_v(new String[]{user.getId().toString(), user.getName(), user.getPaswd()});
+        table.setSearch_k(new String[]{User.ID, User.NAME, User.EMAIL, User.PASSWORD});
+        table.setSearch_v(new String[]{user.getId().toString(), user.getName(), user.getEmail(), user.getPassword()});
         return userMapper.getObjWithParams(table).get(0);
     }
 
@@ -158,8 +158,8 @@ public class UserServiceIml implements UserService{
     @Transactional(readOnly = false)
     public int addUser(User user){
         Table table = getTable(User.TABLENAME);
-        table.setK(new String[]{User.NAME, User.PASWD});
-        table.setV(new String[]{user.getName(), user.getPaswd()});
+        table.setK(new String[]{User.NAME, User.EMAIL, User.PASSWORD});
+        table.setV(new String[]{user.getName(),user.getEmail(), user.getPassword()});
         return userMapper.addObjWithParams(table);
     }
 
@@ -178,8 +178,8 @@ public class UserServiceIml implements UserService{
         //查找数据库中是否有user并返回userTmp
         //select * from user where name = user.getName() and paswd = user.getPaswd()
         Table table = getTable(User.TABLENAME);
-        table.setSearch_k(new String[]{User.NAME, User.PASWD});
-        table.setSearch_v(new String[]{user.getName(), user.getPaswd()});
+        table.setSearch_k(new String[]{User.EMAIL, User.PASSWORD});
+        table.setSearch_v(new String[]{user.getEmail(), user.getPassword()});
         ArrayList<User> userTmp = userMapper.getObjWithParams(table);
         if(null != userTmp && userTmp.size() != 0){
             return SUCCESS;
@@ -192,10 +192,10 @@ public class UserServiceIml implements UserService{
     @Transactional(readOnly = false)
     public Result register(User user){
         Table table = getTable(User.TABLENAME);
-        table.setK(new String[]{User.NAME, User.PASWD});
-        table.setV(new String[]{user.getName(), user.getPaswd()});
-        table.setSearch_k(new String[]{User.NAME, User.PASWD});
-        table.setSearch_v(new String[]{user.getName(), user.getPaswd()});
+        table.setK(new String[]{User.NAME, User.EMAIL, User.PASSWORD});
+        table.setV(new String[]{user.getName(),user.getEmail(), user.getPassword()});
+        table.setSearch_k(new String[]{User.EMAIL});
+        table.setSearch_v(new String[]{user.getEmail()});
 //        User userSearch = userMapper.getUser(user);
         ArrayList<User> userSearch = userMapper.getObjWithParams(table);
         if(null != userSearch && userSearch.size() != 0){

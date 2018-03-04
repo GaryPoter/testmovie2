@@ -13,7 +13,7 @@ $('#register').on('click', function () {
         async: false,
         type: 'POST',
         dataType: 'json',
-        data:{name:name, paswd:password},
+        data:{name:name, email: email, password:password},
         url: '/movie/user/registerAction',
         error : function(XMLHttpRequest, textStatus, errorThrown) {
             console.log(XMLHttpRequest);
@@ -23,7 +23,7 @@ $('#register').on('click', function () {
         success: function(response){
             if(0 == response.code){
                 // document.getElementById("moviePage").click();
-                $('#moviePage').click();
+                window.location.href="/movie/home";
             }else {
                 $('#username').select().focus();
             }
