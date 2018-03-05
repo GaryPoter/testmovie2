@@ -1,4 +1,4 @@
-$('#register').on('click', function () {
+$('#registerBtn').on('click', function () {
 	var name = $('input#username').val();
 	var email = $('input#email').val();
     var password = $('input#password').val();

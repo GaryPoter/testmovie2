@@ -24,6 +24,10 @@ public class UserController {
     private ItemService itemService;
 
 
+    /**
+     *
+     * @return 获得所有的用户
+     */
     @RequestMapping("/getAllUser")
     public ArrayList<User> getAllUser(){
         return userService.getAll();
@@ -57,11 +61,24 @@ public class UserController {
         return userService.getUserById(id);
     }
 
+    /**
+     *
+     * @param email 前端json中的email
+     * @param password 前端json中的password
+     * @return
+     */
     @RequestMapping(value = "/loginAction", method = {RequestMethod.POST})
     public Result login(String email, String password){
         return userService.login(new User(new Long(-1),null, email, password));
     }
 
+    /**
+     *
+     * @param name user的昵称
+     * @param email user的注册邮箱
+     * @param password user的密码
+     * @return
+     */
     @RequestMapping(value = "/registerAction", method = RequestMethod.POST)
     public Result register(String name, String email, String password){
         return userService.register(new User(new Long(-1), name, email, password));

@@ -2,6 +2,10 @@ package com.example.testmovie.DAO;
 
 public class Movie {
 
+    public static final String TABLENAME = "movie";
+
+    public static final String MOVIENAME = ""
+
     private Long id;
 
     private String name;

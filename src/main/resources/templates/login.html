@@ -9,23 +9,27 @@
   <link rel="stylesheet" th:href="@{/assets/css/other.min.css}" />
 </head>
 <body class="login-container">
+<script th:src="@{/js/jquery-3.3.1.min.js}"></script>
+<!--<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>-->
   <div class="login-box">
     <div class="logo-img">
       <img th:src="@{/assets/images/logo2_02.png}" alt="" />
     </div>
     <form action="" class="am-form" data-am-validator="">
       <div class="am-form-group">
-        <label for="doc-vld-name-2"><i class="am-icon-user"></i></label>
-        <input type="text" id="doc-vld-name-2" minlength="3" placeholder="输入用户名（至少 3 个字符）" required=""/>
+        <label for="email"><i class="am-icon-user"></i></label>
+        <input type="email" id="email" minlength="3" placeholder="输入用户名（至少 3 个字符）" required=""/>
       </div>
 
       <div class="am-form-group">
-        <label for="doc-vld-email-2"><i class="am-icon-key"></i></label>
-        <input type="email" id="doc-vld-email-2" placeholder="输入密码" required=""/>
+        <label for="password"><i class="am-icon-key"></i></label>
+        <input type="password" id="password" placeholder="输入密码" required=""/>
       </div>
       
-      <button class="am-btn am-btn-secondary"  type="submit">登录</button>
+      <button class="am-btn am-btn-secondary"  type="button" id="loginBtn">登录</button>
     </form>
   </div>
+  <script th:src="@{/js/utils.js}" type="text/javascript"></script>
+  <script th:src="@{/js/login.js}" type='text/javascript'></script>
 </body>
 </html>

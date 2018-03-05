@@ -21,7 +21,11 @@ $('#loginBtn').on('click', function () {
 					// document.getElementById("moviePage").click();
 					// $('#moviePage').click();
                     // $(location).attr('href', 'index.html');
-                    window.location.href = "/movie/home";
+					alert("登录成功!");
+                    // window.location.href = "http://www.baidu.com";
+                    // $(location).prop('href', 'http://www.jb51.net');
+                    $(window).attr('location','/movie/home');
+                    console.log("重定向");
                 }else {
 					$('#email').select().focus();
 				}
